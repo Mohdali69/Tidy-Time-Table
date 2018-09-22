@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "807171933737",
+    "firebase_url": "https://tidytimetable.firebaseio.com",
+    "project_id": "tidytimetable",
+    "storage_bucket": "tidytimetable.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807171933737:android:22c4e59a23c6e287",
+        "android_client_info": {
+          "package_name": "com.example.mohdali.tidytimetable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807171933737-18b2du8vhbh6pug7rc9s5ajv07jvvjv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mohdali.tidytimetable",
+            "certificate_hash": "6ae651907095ec4dc92fcbf5764f8c6970352594"
+          }
+        },
+        {
+          "client_id": "807171933737-iufdga59mjjetl5tg7vomkdar55nciob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mohdali.tidytimetable",
+            "certificate_hash": "6e2cecf9128ee07bf77e546c7c78b3695b43d820"
+          }
+        },
+        {
+          "client_id": "807171933737-2mte5q4n3v09q48qu2cqavl7tmi5ge37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJxBC1RH1N9xmBuLH1HNUI7INEga-iSwU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807171933737-2mte5q4n3v09q48qu2cqavl7tmi5ge37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807171933737:android:d842af33038fad5c",
+        "android_client_info": {
+          "package_name": "info.androidhive.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807171933737-th215gqphoo61locd8mbgq8ktfef6343.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "info.androidhive.firebase",
+            "certificate_hash": "6e2cecf9128ee07bf77e546c7c78b3695b43d820"
+          }
+        },
+        {
+          "client_id": "807171933737-2mte5q4n3v09q48qu2cqavl7tmi5ge37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJxBC1RH1N9xmBuLH1HNUI7INEga-iSwU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807171933737-2mte5q4n3v09q48qu2cqavl7tmi5ge37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
