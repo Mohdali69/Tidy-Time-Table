@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+                startActivity(new Intent(LoginActivity.this,Premiere_Page.class));
 
                 //authenticate user
                 auth.signInWithEmailAndPassword(email, password)
