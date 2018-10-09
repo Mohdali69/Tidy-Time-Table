@@ -15,7 +15,7 @@
     <string name="hint_password">Mot de Passe</string>
     <string name="hint_name">Nom</string>
     <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Vous n'etes pas Enregistrer? Enregistrez-vous Maintenant !</string>
+    <string name="btn_link_to_register">Vous n etes pas Enregistrer? Enregistrez-vous Maintenant !</string>
     <string name="btn_link_to_login">Vous etes enregistrer. Connectez-vous !</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Mot de Passe Oublié?</string>
@@ -29,4 +29,10 @@
     <string name="lbl_forgot_password">Mot de Passe Oublié?</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="forgot_password_msg">Nous avons besoin de votre Email pour vous envoyer le Mot de Passe et les instructions.</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Paramètres</string>
 </resources>
