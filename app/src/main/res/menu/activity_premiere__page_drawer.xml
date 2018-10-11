@@ -5,19 +5,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_ajouter_taches"
             android:icon="@drawable/ic_menu_add"
             android:title="Ajouter une Tâche" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_taches"
             android:icon="@drawable/ic_menu_taches"
             android:title="Mes Tâches" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_routines"
             android:icon="@drawable/ic_menu_routine"
             android:title="Routines" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_profil"
             android:icon="@drawable/ic_group_black"
             android:title="Profile" />
     </group>
@@ -25,11 +25,11 @@
     <item android:title="Communication">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_partager"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Partager" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_envoyer"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Envoyer" />
         </menu>
