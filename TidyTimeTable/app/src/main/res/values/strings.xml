@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tidy Time Table</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="forgot_password">Mot de passe oublié :</string>
+    <string name="msg">Vous pouvez reinitialiser votre mot de passe en nous indiquant votre email ci-dessous et en suivant les inscrutions qui vont vous être envoyé par mail.</string>
+    <string name="btn_forgot">Reinitialiser mot de passe</string>
+    <string name="title_activity_test">Test</string>
+    <string name="time_remaining">Temps restant :</string>
+    <string name="btn_reset">Valider</string>
+</resources>
