@@ -30,7 +30,7 @@
             android:layout_marginBottom="40dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="@string/time_remaining"
+            android:text=""
             android:textColor="@android:color/white"
             android:textColorLink="@color/iron"
             android:textSize="20dp" />
@@ -39,8 +39,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Code :"
+            android:text="Code de vérification :"
             android:textColor="@color/iron"
             android:textSize="18dp" />
 
@@ -48,7 +47,6 @@
             android:id="@+id/pinView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             app:cursorVisible="true"
             app:forceKeyboard="false"
             app:inputType="number"

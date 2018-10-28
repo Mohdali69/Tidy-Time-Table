@@ -176,7 +176,7 @@ public class ResetActivity extends AppCompatActivity {
     public void updateTimer() {
         int minutes = (int) timeLeft / 60000;
         int secondes = (int) timeLeft % 60000 / 1000;
-        String timeLeftText = "Temps restant : ";
+        String timeLeftText = "Votre code de vérification expirera dans ";
         if(minutes>0) {
             timeLeftText += minutes + "min";
         }
