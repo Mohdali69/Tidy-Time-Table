@@ -5,7 +5,7 @@ require("conn.php");
 $temp_password = $_POST["code"];
 $user_password = $_POST["password"];
 
-$conn = mysqli_connect($server_name, $mysql_username, $mysql_password, $db_name);
+$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $sql_query = "select * from `user` where temp_password like '$temp_password';";
 $result = mysqli_query($conn, $sql_query);
 $sql_query2 = "update `user` set password = '$user_password' where temp_password like '$temp_password';";

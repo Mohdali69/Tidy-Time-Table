@@ -5,7 +5,7 @@ require("conn.php");
 $user_email = $_POST["email"];
 $user_password = $_POST["password"];
 $true_password = "";
-$conn = mysqli_connect($server_name, $mysql_username, $mysql_password, $db_name);
+$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $sql_query = "select password from `user` where email like '$user_email';";
 $result = mysqli_query($conn, $sql_query);
 

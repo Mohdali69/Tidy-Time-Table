@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.source.tidytimetable"
@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    repositories {
+        maven {
+            url "http://dl.bintray.com/lukaville/maven"
+        }
+    }
 }
 
 dependencies {
@@ -26,5 +32,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.github.GoodieBag:Pinview:v1.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.3.1'
+    implementation 'com.nbsp:library:1.09'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

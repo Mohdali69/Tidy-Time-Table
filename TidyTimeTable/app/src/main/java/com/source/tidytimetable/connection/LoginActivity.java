@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.source.tidytimetable.MainActivity;
 import com.source.tidytimetable.R;
 
 import java.util.concurrent.ExecutionException;
@@ -30,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     TextView forgotPasswordLink;
     @BindView(R.id.link_signup)
     TextView signupLink;
+
+    public static String id;
+    public static String lastName;
+    public static String name;
+    public static String email;
 
     public static Activity log;
 
@@ -118,8 +124,33 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
+        email = emailText.getText().toString();
+        String result = "";
+        try {
+            result = new BackgroundInfo(this).execute("info",email).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        id = result.substring(0, result.indexOf("/"));
+        lastName = result.substring(result.indexOf("/") + 1, result.indexOf("~"));
+        name = result.substring(result.indexOf("~") + 1, result.length());
+        result = "";
+        try {
+            result = new BackgroundInfo(this).execute("exist",id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if(result.equals("1")) {
+            new BackgroundPhoto(MainActivity.imageView)
+                    .execute("http://10.0.2.2:8888/images/" + id + ".png");
+        }
         loginButton.setEnabled(true);
         finish();
+        MainActivity.infoText.setText(name + " " + lastName);
     }
 
     public void onLoginFailed() {

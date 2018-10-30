@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.source.tidytimetable.MainActivity;
 import com.source.tidytimetable.R;
 
 import java.util.concurrent.ExecutionException;
@@ -18,6 +20,10 @@ import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
 
+    @BindView(R.id.input_lastname)
+    EditText lastNameText;
+    @BindView(R.id.input_name)
+    EditText nameText;
     @BindView(R.id.input_email)
     EditText emailText;
     @BindView(R.id.input_password)
@@ -28,7 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     Button signupButton;
     @BindView(R.id.link_login)
     TextView loginLink;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +77,15 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Création du compte...");
         progressDialog.show();
 
+        String lastName = lastNameText.getText().toString();
+        String name = nameText.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String result = "";
 
         BackgroundRegister bw = new BackgroundRegister(this);
         try {
-            result = bw.execute("signup",email,password).get();
+            result = bw.execute("signup",lastName,name,email,password).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -104,9 +112,21 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
     public void onSignupSuccess() {
         signupButton.setEnabled(true);
+        LoginActivity.email = emailText.getText().toString();
+        String result = "";
+        try {
+            result = new BackgroundInfo(this).execute("info",LoginActivity.email).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        LoginActivity.id = result.substring(0, result.indexOf("/"));
+        LoginActivity.name = nameText.getText().toString();
+        LoginActivity.lastName = lastNameText.getText().toString();
+        MainActivity.infoText.setText(LoginActivity.name + " " + LoginActivity.lastName);
         finish();
         LoginActivity.log.finish();
     }
@@ -120,10 +140,25 @@ public class SignupActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
+        String lastName = lastNameText.getText().toString();
+        String name = nameText.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String reEnterPassword = confirmPasswordText.getText().toString();
 
+        if (lastName.isEmpty() || lastName.equals("")) {
+            lastNameText.setError("Entrez un nom");
+            valid = false;
+        } else {
+            lastNameText.setError(null);
+        }
+
+        if (name.isEmpty() || name.equals("")) {
+            nameText.setError("Entrez un prénom");
+            valid = false;
+        } else {
+            nameText.setError(null);
+        }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailText.setError("Entrez une adresse email valide");

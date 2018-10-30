@@ -26,8 +26,10 @@ public class BackgroundRegister extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... parms) {
         String type = parms[0];
-        String email = parms[1];
-        String password = parms[2];
+        String lastname = parms[1];
+        String name = parms[2];
+        String email = parms[3];
+        String password = parms[4];
         String signup_url = "http://10.0.2.2:8888/signup.php";
 
         if(type.equals("signup")) {
@@ -39,7 +41,9 @@ public class BackgroundRegister extends AsyncTask<String,Void,String> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("email","UTF-8") + "=" + URLEncoder.encode(email,"UTF-8") + "&"
+                String post_data = URLEncoder.encode("lastname","UTF-8") + "=" + URLEncoder.encode(lastname,"UTF-8") + "&"
+                        + URLEncoder.encode("name","UTF-8") + "=" + URLEncoder.encode(name,"UTF-8")+ "&"
+                        + URLEncoder.encode("email","UTF-8") + "=" + URLEncoder.encode(email,"UTF-8")+ "&"
                         + URLEncoder.encode("password","UTF-8") + "=" + URLEncoder.encode(password,"UTF-8");
                 bw.write(post_data);
                 bw.flush();
