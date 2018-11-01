@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -127,6 +126,8 @@ public class SignupActivity extends AppCompatActivity {
         LoginActivity.name = nameText.getText().toString();
         LoginActivity.lastName = lastNameText.getText().toString();
         MainActivity.infoText.setText(LoginActivity.name + " " + LoginActivity.lastName);
+        MainActivity.userStatut(true);
+        MainActivity.profilIV.setImageDrawable(getResources().getDrawable(R.drawable.profil));
         finish();
         LoginActivity.log.finish();
     }

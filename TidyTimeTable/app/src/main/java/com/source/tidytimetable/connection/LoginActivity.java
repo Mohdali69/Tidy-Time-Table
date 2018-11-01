@@ -3,6 +3,7 @@ package com.source.tidytimetable.connection;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.source.tidytimetable.BackgroundLog;
 import com.source.tidytimetable.MainActivity;
 import com.source.tidytimetable.R;
 
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String email;
 
     public static Activity log;
+    public static boolean someoneLogin;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -66,10 +69,22 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        someoneLogin = someoneLogin();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (someoneLogin) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void login() {
@@ -103,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                     new Runnable() {
                         public void run() {
                             onLoginSuccess();
+                            resetSessionTimer();
                             progressDialog.dismiss();
                         }
                     }, 3000);
@@ -118,11 +134,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
-
     public void onLoginSuccess() {
         email = emailText.getText().toString();
         String result = "";
@@ -136,21 +147,14 @@ public class LoginActivity extends AppCompatActivity {
         id = result.substring(0, result.indexOf("/"));
         lastName = result.substring(result.indexOf("/") + 1, result.indexOf("~"));
         name = result.substring(result.indexOf("~") + 1, result.length());
-        result = "";
-        try {
-            result = new BackgroundInfo(this).execute("exist",id).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if(result.equals("1")) {
-            new BackgroundPhoto(MainActivity.imageView)
-                    .execute("http://10.0.2.2:8888/images/" + id + ".png");
-        }
+        MainActivity.userStatut(true);
         loginButton.setEnabled(true);
-        finish();
-        MainActivity.infoText.setText(name + " " + lastName);
+        emailText.getText().clear();
+        emailText.clearFocus();
+        passwordText.getText().clear();
+        passwordText.clearFocus();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     public void onLoginFailed() {
@@ -180,7 +184,35 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
 
+    public boolean someoneLogin() {
+        String result = "";
+        try {
+            result = new BackgroundLog(this).execute("online").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if(!result.equals("-1")) {
+            id = result.substring(0, result.indexOf("/"));
+            lastName = result.substring(result.indexOf("/") + 1, result.indexOf("~"));
+            name = result.substring(result.indexOf("~") + 1, result.length());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void resetSessionTimer() {
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("lastTimeTouch", System.currentTimeMillis());
+
+        editor.apply();
     }
 
 }
