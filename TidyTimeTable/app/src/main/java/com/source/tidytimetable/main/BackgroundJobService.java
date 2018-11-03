@@ -1,4 +1,4 @@
-package com.source.tidytimetable;
+package com.source.tidytimetable.main;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
@@ -19,11 +19,11 @@ public class BackgroundJobService extends JobService {
             @Override
             public void run() {
                 while(!jobCancelled) {
-                    if(MainActivity.lastTimeTouch + 60000 < System.currentTimeMillis()) {
+                    if(MainActivity.lastTimeTouch + 60000 * 60 * 24 * 5 < System.currentTimeMillis()) {
                         MainActivity.sessionTimeout();
                         return;
                     }
-                    //long time = (MainActivity.lastTimeTouch + 60000 - System.currentTimeMillis()) / 1000;
+                    //long time = (MainActivity.lastTimeTouch + 60000*5 - System.currentTimeMillis()) / 1000;
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".main.MainActivity" />
 
         <activity
             android:name=".connection.LoginActivity"
@@ -35,7 +35,7 @@
         <activity android:name=".connection.ResetActivity" />
 
         <service
-            android:name=".BackgroundJobService"
+            android:name=".main.BackgroundJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>

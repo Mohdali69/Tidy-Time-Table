@@ -1,6 +1,7 @@
 package com.source.tidytimetable.connection;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.source.tidytimetable.MainActivity;
+import com.source.tidytimetable.main.MainActivity;
 import com.source.tidytimetable.R;
 
 import java.util.concurrent.ExecutionException;
@@ -112,11 +113,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupSuccess() {
-        signupButton.setEnabled(true);
         LoginActivity.email = emailText.getText().toString();
         String result = "";
         try {
-            result = new BackgroundInfo(this).execute("info",LoginActivity.email).get();
+            result = new BackgroundInfo(this).execute("info",LoginActivity.email,"").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -125,11 +125,11 @@ public class SignupActivity extends AppCompatActivity {
         LoginActivity.id = result.substring(0, result.indexOf("/"));
         LoginActivity.name = nameText.getText().toString();
         LoginActivity.lastName = lastNameText.getText().toString();
-        MainActivity.infoText.setText(LoginActivity.name + " " + LoginActivity.lastName);
-        MainActivity.userStatut(true);
-        MainActivity.profilIV.setImageDrawable(getResources().getDrawable(R.drawable.profil));
+        MainActivity.setUserStatut(true);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        signupButton.setEnabled(true);
         finish();
-        LoginActivity.log.finish();
     }
 
     public void onSignupFailed() {

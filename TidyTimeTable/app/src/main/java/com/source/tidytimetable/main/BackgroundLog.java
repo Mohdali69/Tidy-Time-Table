@@ -1,4 +1,4 @@
-package com.source.tidytimetable;
+package com.source.tidytimetable.main;
 
 import android.content.Context;
 import android.os.AsyncTask;

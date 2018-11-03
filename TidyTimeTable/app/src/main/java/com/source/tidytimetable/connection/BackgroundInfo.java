@@ -27,7 +27,7 @@ public class BackgroundInfo extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... parms) {
         String type = parms[0];
         String email = parms[1];
-        String id = parms[1];
+        String id = parms[2];
         String info_url = "http://10.0.2.2:8888/info.php";
         String exist_url = "http://10.0.2.2:8888/exist.php";
 

@@ -1,6 +1,5 @@
 package com.source.tidytimetable.connection;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.source.tidytimetable.BackgroundLog;
-import com.source.tidytimetable.MainActivity;
+import com.source.tidytimetable.main.BackgroundLog;
+import com.source.tidytimetable.main.MainActivity;
 import com.source.tidytimetable.R;
 
 import java.util.concurrent.ExecutionException;
@@ -39,15 +38,12 @@ public class LoginActivity extends AppCompatActivity {
     public static String name;
     public static String email;
 
-    public static Activity log;
     public static boolean someoneLogin;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        log = this;
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -138,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         email = emailText.getText().toString();
         String result = "";
         try {
-            result = new BackgroundInfo(this).execute("info",email).get();
+            result = new BackgroundInfo(this).execute("info",email,"").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -147,14 +143,14 @@ public class LoginActivity extends AppCompatActivity {
         id = result.substring(0, result.indexOf("/"));
         lastName = result.substring(result.indexOf("/") + 1, result.indexOf("~"));
         name = result.substring(result.indexOf("~") + 1, result.length());
-        MainActivity.userStatut(true);
+        MainActivity.setUserStatut(true);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         loginButton.setEnabled(true);
         emailText.getText().clear();
         emailText.clearFocus();
         passwordText.getText().clear();
         passwordText.clearFocus();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
     }
 
     public void onLoginFailed() {

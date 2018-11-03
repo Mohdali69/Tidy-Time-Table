@@ -4,31 +4,27 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
+
+import com.source.tidytimetable.main.MainActivity;
 
 import java.io.InputStream;
 
 public class BackgroundPhoto extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-
-    public BackgroundPhoto(ImageView bmImage) {
-        this.bmImage = bmImage;
-    }
 
     protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
+        String photo_url = urls[0];
+        Bitmap icon = null;
         try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
+            InputStream in = new java.net.URL(photo_url).openStream();
+            icon = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
-        return mIcon11;
+        return icon;
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        MainActivity.bitmap = result;
     }
 }

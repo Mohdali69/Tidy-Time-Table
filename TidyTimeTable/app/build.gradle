@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.source.tidytimetable"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -22,13 +22,21 @@ android {
         maven {
             url "http://dl.bintray.com/lukaville/maven"
         }
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation "com.android.support:design:26.0.0"
+    implementation "com.android.support:design:26.+"
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation 'q.rorbin:badgeview:1.1.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.github.GoodieBag:Pinview:v1.3'

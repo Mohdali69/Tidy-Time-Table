@@ -1,6 +1,9 @@
-package com.source.tidytimetable;
+package com.source.tidytimetable.main;
 
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.source.tidytimetable.R;
 import com.source.tidytimetable.connection.*;
+import com.source.tidytimetable.fragment.*;
 import android.Manifest;
 import android.app.Activity;
 import android.app.job.JobInfo;
@@ -9,18 +12,21 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
@@ -33,28 +39,41 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static Activity activity;
+    public static Activity activity;
     public static long lastTimeTouch;
+    private static int i = 1;
     private static boolean sessionTimeout;
-
-    public static TextView infoText;
-    public static ImageView profilIV;
-    public ImageView modifyIV;
-    public ImageView logoutIV;
+    public static Bitmap bitmap;
+    private BottomNavigationViewEx bottomNav;
+    private Badge badge;
+    public static FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         sessionTimeout = false;
         activity = this;
+
+        bottomNav = findViewById(R.id.bottom_navigation);
+
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.enableAnimation(false);
+        bottomNav.enableShiftingMode(false);
+        bottomNav.enableItemShiftingMode(false);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new HomeFragment()).commit();
+        }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -63,21 +82,53 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        profilIV = (ImageView) findViewById(R.id.iv_profil);
-        modifyIV = (ImageView) findViewById(R.id.iv_modify);
-        logoutIV = (ImageView) findViewById(R.id.iv_logout);
-        infoText = (TextView) findViewById(R.id.tv_info);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        logoutIV.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                Fragment selectedFragment = new AddTaskFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        selectedFragment).commit();
+                bottomNav.getMenu().getItem(2).setChecked(false);
+                if (badge != null) {
+                    badge.hide(false);
+                }
+                badge = addBadgeAt(1,i);
+                i++;
             }
         });
 
-        setUserInformation();
+        String result = "";
+        try {
+            result = new BackgroundInfo(MainActivity.activity).execute("exist","",LoginActivity.id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if(result.equals("1")) {
+            new BackgroundPhoto()
+                    .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
+        } else {
+            bitmap = BitmapFactory.decodeResource(null, R.drawable.profil);
+        }
+    }
 
-        profilSetAction();
+
+    private Badge addBadgeAt(int position, int number) {
+
+        return new QBadgeView(this)
+                .setBadgeNumber(number)
+                .setGravityOffset(12, 2, true)
+                .bindTarget(bottomNav.getBottomNavigationItemView(position))
+                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                    @Override
+                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
+                            Toast.makeText(MainActivity.this, "Plus de notifs", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -136,33 +187,19 @@ public class MainActivity extends AppCompatActivity {
         scheduler.schedule(info);
     }
 
-    private void profilSetAction() {
-
-        profilIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialFilePicker()
-                        .withActivity(MainActivity.this)
-                        .withRequestCode(10)
-                        .start();
-            }
-        });
-
-    }
-
-    public void logout() {
-        userStatut(false);
+    public static void logout() {
+        setUserStatut(false);
         LoginActivity.someoneLogin = false;
         activity.finish();
     }
 
     public static void sessionTimeout() {
         sessionTimeout = true;
-        userStatut(false);
+        setUserStatut(false);
         activity.finish();
     }
 
-    public static void userStatut(final boolean b) {
+    public static void setUserStatut(final boolean b) {
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -197,24 +234,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setUserInformation() {
-        infoText.setText(LoginActivity.name + " " + LoginActivity.lastName);
-        String result = "";
-        try {
-            result = new BackgroundInfo(this).execute("exist",LoginActivity.id).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if(result.equals("1")) {
-            new BackgroundPhoto(profilIV)
-                    .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
-        } else {
-            profilIV.setImageDrawable(getResources().getDrawable(R.drawable.profil));
-        }
-    }
-
     @Override
     public void onUserInteraction() {
         lastTimeTouch = System.currentTimeMillis();
@@ -226,18 +245,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == 100 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-            profilSetAction();
-        }else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if(requestCode == 10 && resultCode == RESULT_OK){
 
             Thread t = new Thread(new Runnable() {
@@ -267,20 +275,17 @@ public class MainActivity extends AppCompatActivity {
 
                         if(!response.isSuccessful()){
                             throw new IOException("Error : "+response);
+                        } else {
+                            new BackgroundPhoto()
+                                    .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
+                            ProfilFragment.userChoosedPhoto = true;
                         }
-
-                        new BackgroundPhoto(profilIV)
-                                .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
-
             t.start();
-
         }
     }
 
@@ -291,4 +296,37 @@ public class MainActivity extends AppCompatActivity {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()) {
+                        case R.id.nav_home:
+                            selectedFragment = new HomeFragment();
+                            break;
+                        case R.id.nav_chart:
+                            if (badge != null) {
+                                badge.hide(true);
+                                i = 1;
+                            }
+                            selectedFragment = new ChartFragment();
+                            break;
+                        case R.id.nav_empty:
+                            return false;
+                        case R.id.nav_profil:
+                            selectedFragment = new ProfilFragment();
+                            break;
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
+                            break;
+                    }
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+
+                    return true;
+                }
+            };
 }
