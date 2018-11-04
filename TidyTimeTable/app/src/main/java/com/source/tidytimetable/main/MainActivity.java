@@ -1,5 +1,6 @@
 package com.source.tidytimetable.main;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.source.tidytimetable.R;
 import com.source.tidytimetable.connection.*;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -28,9 +30,12 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.source.tidytimetable.notification.BackgroundBadge;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
@@ -46,14 +51,15 @@ import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Context context;
     public static Activity activity;
     public static long lastTimeTouch;
-    private static int i = 1;
+    private static int nbBadgeCount;
     private static boolean sessionTimeout;
-    public static Bitmap bitmap;
-    private BottomNavigationViewEx bottomNav;
-    private Badge badge;
     public static FloatingActionButton fab;
+    private static BottomNavigationViewEx bottomNav;
+    private static Badge badge;
+    public static Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         sessionTimeout = false;
         activity = this;
+        context = this;
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -90,12 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = new AddTaskFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         selectedFragment).commit();
-                bottomNav.getMenu().getItem(2).setChecked(false);
-                if (badge != null) {
-                    badge.hide(false);
-                }
-                badge = addBadgeAt(1,i);
-                i++;
             }
         });
 
@@ -113,22 +114,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             bitmap = BitmapFactory.decodeResource(null, R.drawable.profil);
         }
-    }
 
+        setBadgeCount();
 
-    private Badge addBadgeAt(int position, int number) {
-
-        return new QBadgeView(this)
-                .setBadgeNumber(number)
-                .setGravityOffset(12, 2, true)
-                .bindTarget(bottomNav.getBottomNavigationItemView(position))
-                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-                    @Override
-                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
-                            Toast.makeText(MainActivity.this, "Plus de notifs", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        FirebaseMessaging.getInstance().subscribeToTopic("food");
     }
 
     @Override
@@ -234,6 +223,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void newNotification() {
+        MainActivity.nbBadgeCount++;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Your logic here...
+
+                // When you need to modify a UI element, do so on the UI thread.
+                // 'getActivity()' is required as this is being ran from a Fragment.
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(nbBadgeCount > 0) {
+                            badge.hide(false);
+                        }
+                        badge = addBadgeAt(1,nbBadgeCount);
+                    }
+                });
+            }
+        }, 0, 3000);
+    }
+
+    private void setBadgeCount() {
+        String result = "";
+        try {
+            result = new BackgroundBadge().execute("count","count").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        nbBadgeCount = Integer.parseInt(result);
+        if(!result.equals("0")) {
+            badge = addBadgeAt(1,nbBadgeCount);
+        }
+    }
+
+    private static Badge addBadgeAt(int position, int number) {
+
+        return new QBadgeView(context)
+                .setBadgeNumber(number)
+                .setGravityOffset(12, 2, true)
+                .bindTarget(bottomNav.getBottomNavigationItemView(position))
+                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                    @Override
+                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState) {
+                            new BackgroundBadge().execute("reset","reset");
+                            nbBadgeCount = 0;
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onUserInteraction() {
         lastTimeTouch = System.currentTimeMillis();
@@ -307,9 +351,10 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_chart:
-                            if (badge != null) {
+                            if (nbBadgeCount > 0) {
                                 badge.hide(true);
-                                i = 1;
+                                nbBadgeCount = 0;
+                                new BackgroundBadge().execute("reset","reset");
                             }
                             selectedFragment = new ChartFragment();
                             break;

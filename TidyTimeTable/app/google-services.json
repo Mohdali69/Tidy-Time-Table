@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "668720624603",
+    "firebase_url": "https://tidytimetable-46944.firebaseio.com",
+    "project_id": "tidytimetable-46944",
+    "storage_bucket": "tidytimetable-46944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668720624603:android:145b75bf12cfc24b",
+        "android_client_info": {
+          "package_name": "com.source.tidytimetable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668720624603-rgia3f1rs6o6i5k8cd78901o9i1dhru6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQId8kY7UAt2xygwAJmGO_6bRwTEaZ_5U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
