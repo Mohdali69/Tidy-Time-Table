@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Accueil" />
+
+    <item
+        android:id="@+id/nav_chart"
+        android:icon="@drawable/ic_show_chart_black_24dp"
+        android:title="Graphique" />
+
+    <item
+        android:id="@+id/nav_empty"
+        android:title=""
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/nav_profil"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Profil" />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Paramètres" />
+
+</menu>
