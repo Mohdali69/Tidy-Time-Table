@@ -9,6 +9,7 @@
         android:text="Nom de la Tache :"
         android:textSize="30dp" />
     <EditText
+        android:id="@+id/text_nom_tache"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="_________________________"/>
@@ -42,8 +43,8 @@
         android:textSize="30dp"
         android:layout_centerInParent="true"/>
     <EditText
+        android:id="@+id/text_commentaire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="______________________"/>
-
 </LinearLayout>
