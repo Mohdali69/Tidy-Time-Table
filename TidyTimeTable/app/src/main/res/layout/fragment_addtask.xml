@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/fragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom de la Tache :"
+        android:textSize="30dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="_________________________"/>
+    <Button
+        android:id="@+id/btn_debut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date Debut"/>
+    <TextView
+        android:id="@+id/text_debut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de Debut"
+        android:textSize="25dp" />
+    <Button
+        android:id="@+id/btn_fin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date FIN"/>
+    <TextView
+        android:id="@+id/text_fin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de Fin "
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AddTask Fragment"
+        android:text="Commentaire:"
         android:textSize="30dp"
         android:layout_centerInParent="true"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="______________________"/>
 
-</RelativeLayout>
+</LinearLayout>
