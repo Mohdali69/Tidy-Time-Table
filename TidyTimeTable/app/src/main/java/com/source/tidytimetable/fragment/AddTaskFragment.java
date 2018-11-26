@@ -42,48 +42,42 @@ public class AddTaskFragment extends Fragment {
         btndeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFrag = new DatePickerFragment();
-                newFrag.show(getFragmentManager(),"Date Picker");
+                c= Calendar.getInstance();
+                int day =c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year= c.get(Calendar.YEAR);
+                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        textdeb.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
+                    }
+                },day,month,year);
+                datepick.show();
+            }
+        });
+        btnfin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                c= Calendar.getInstance();
+                int day =c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year= c.get(Calendar.YEAR);
+                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        textfin.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
+                    }
+                },day,month,year);
+                datepick.show();
             }
         });
         return inflater.inflate(R.layout.fragment_addtask, container, false);
     }
 
-    @Override
+
     public void onDestroy() {
         super.onDestroy();
         MainActivity.fab.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
-    }
-    @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            //Use the current date as the default date in the date picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            //Create a new DatePickerDialog instance and return it
-        /*
-            DatePickerDialog Public Constructors - Here we uses first one
-            public DatePickerDialog (Context context, DatePickerDialog.OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth)
-            public DatePickerDialog (Context context, int theme, DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth)
-         */
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            //Do something with the date chosen by the user
-            TextView tv = (TextView) getActivity().findViewById(R.id.text_debut);
-            tv.setText("Date changed...");
-            tv.setText(tv.getText() + "\nYear: " + year);
-            tv.setText(tv.getText() + "\nMonth: " + month);
-            tv.setText(tv.getText() + "\nDay of Month: " + day);
-
-            String stringOfDate = day + "/" + month + "/" + year;
-            tv.setText(tv.getText() + "\n\nFormatted date: " + stringOfDate);
-        }
     }
 
 }
