@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.source.tidytimetable.*;
 import com.source.tidytimetable.main.MainActivity;
@@ -25,8 +27,13 @@ public class AddTaskFragment extends Fragment {
 
     Button btndeb;
     Button btnfin;
+    Button btnvalider;
     TextView textdeb;
     TextView textfin;
+    EditText text_nom_tache;
+    String nomtache;
+    EditText commentaire;
+    String comm;
     DatePickerDialog datepick;
     Calendar c;
 
@@ -35,10 +42,15 @@ public class AddTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MainActivity.fab.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
         LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
-        btndeb = (Button)v.findViewById(R.id.btn_debut);
-        btnfin = (Button)v.findViewById(R.id.btn_fin);
-        textdeb = (TextView)v.findViewById(R.id.text_debut);
-        textfin = (TextView)v.findViewById(R.id.text_fin);
+        btndeb = v.findViewById(R.id.btn_debut);
+        btnfin = v.findViewById(R.id.btn_fin);
+        textdeb = v.findViewById(R.id.text_debut);
+        textfin = v.findViewById(R.id.text_fin);
+        btnvalider = v.findViewById(R.id.btn_valider);
+        text_nom_tache = v.findViewById(R.id.text_nom_tache);
+        commentaire= v.findViewById(R.id.text_commentaire);
+        comm=commentaire.getText().toString();
+        nomtache=text_nom_tache.getText().toString();
         btndeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +83,30 @@ public class AddTaskFragment extends Fragment {
                 datepick.show();
             }
         });
+        btndeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(textdeb.getText().toString()=="Date Debut"){
+                    Toast.makeText(getActivity(),"Vous n'avez pas entré de date de debut",Toast.LENGTH_LONG).show();
+                }
+                else if(textfin.getText().toString()=="Date FIN"){
+                    Toast.makeText(getActivity(),"Vous n'avez pas entré de date de fin",Toast.LENGTH_LONG).show();
+
+                }
+                else if(nomtache.matches("")){
+                    Toast.makeText(getActivity(), "Vous n'avez pas entré le nom de la tâche", Toast.LENGTH_LONG).show();
+
+                }
+                else if(comm.matches("")){
+                    Toast.makeText(getActivity(),"Vous n'avez pas entré de commentaire",Toast.LENGTH_LONG).show();
+
+                }
+                else{
+                    //Entrez des Valeurs dans la base de donnés
+                }
+            }
+        });
+
         return inflater.inflate(R.layout.fragment_addtask, container, false);
     }
 
