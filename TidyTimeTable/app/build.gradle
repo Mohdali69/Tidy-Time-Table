@@ -47,5 +47,5 @@ dependencies {
     implementation 'com.nbsp:library:1.09'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 }
