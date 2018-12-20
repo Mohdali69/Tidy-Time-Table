@@ -23,6 +23,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.source.tidytimetable.*;
 
@@ -38,8 +39,21 @@ public class ChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: starting to create chart");
         LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
+        afficherPieChart(inflater,container);
         return inflater.inflate(R.layout.fragment_chart, container, false);
 
+    }
+    private void afficherPieChart(LayoutInflater inflater,ViewGroup container){
+        LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
+        //Entrée les Valeurs dans le Pie Chart à patir du for
+        List<PieEntry> pieEntries = new ArrayList<>();
+        for(int i = 0;i<yData.length;i++){
+            pieEntries.add(new PieEntry(yData[i],xData[i]));
+        }
+        PieDataSet dataSet = new PieDataSet(pieEntries,"Vos Statistiques");
+        PieData data = new PieData(dataSet);
+        //Affichage du Pie Chart
+        PieChart chart = (PieChart) v.findViewById(R.id.idPieChart);
     }
 
 }
