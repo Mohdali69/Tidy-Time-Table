@@ -53,7 +53,7 @@ public class ChartFragment extends Fragment {
         //Affichage du Pie Chart
         PieChart chart = (PieChart) v.findViewById(R.id.idPieChart);
         chart.setData(data);
-        chart.animateY(1000);
+        chart.animateY(1100);
         chart.invalidate();
         return inflater.inflate(R.layout.fragment_chart, container, false);
 
