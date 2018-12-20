@@ -25,6 +25,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.source.tidytimetable.*;
 
 import static android.content.ContentValues.TAG;
@@ -39,10 +40,25 @@ public class ChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: starting to create chart");
         LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
-        afficherPieChart(inflater,container);
+
+        //Entrée les Valeurs dans le Pie Chart à patir du for
+        List<PieEntry> pieEntries = new ArrayList<>();
+        for(int i = 0;i<yData.length;i++){
+            pieEntries.add(new PieEntry(yData[i],xData[i]));
+        }
+        PieDataSet dataSet = new PieDataSet(pieEntries,"Vos Statistiques");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieData data = new PieData(dataSet);
+
+        //Affichage du Pie Chart
+        PieChart chart = (PieChart) v.findViewById(R.id.idPieChart);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
         return inflater.inflate(R.layout.fragment_chart, container, false);
 
     }
+    /*
     private void afficherPieChart(LayoutInflater inflater,ViewGroup container){
         LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
         //Entrée les Valeurs dans le Pie Chart à patir du for
@@ -55,5 +71,5 @@ public class ChartFragment extends Fragment {
         //Affichage du Pie Chart
         PieChart chart = (PieChart) v.findViewById(R.id.idPieChart);
     }
-
+*/
 }
