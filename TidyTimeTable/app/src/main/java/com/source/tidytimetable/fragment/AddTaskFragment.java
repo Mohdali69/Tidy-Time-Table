@@ -111,9 +111,6 @@ public class AddTaskFragment extends Fragment {
     }
 
 
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.fab.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
-    }
+
 
 }
