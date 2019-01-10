@@ -17,7 +17,6 @@
         android:id="@+id/btn_debut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="ClickBtndeb"
         android:text="Date Debut"/>
     <TextView
         android:id="@+id/text_debut"
@@ -29,7 +28,6 @@
         android:id="@+id/btn_fin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="ClickBtnfin"
         android:text="Date FIN"/>
     <TextView
         android:id="@+id/text_fin"
@@ -53,6 +51,5 @@
         android:id="@+id/btn_valider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="ClickBtnvalider"
         android:text="Valider"/>
 </LinearLayout>

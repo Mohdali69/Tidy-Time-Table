@@ -5,8 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View.OnClickListener;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +26,7 @@ import com.source.tidytimetable.main.MainActivity;
 
 import java.util.Calendar;
 
-public class AddTaskFragment extends Fragment {
+public class AddTaskFragment extends Fragment implements View.OnClickListener {
 
     Button btndeb;
     Button btnfin;
@@ -34,14 +37,16 @@ public class AddTaskFragment extends Fragment {
     String nomtache;
     EditText commentaire;
     String comm;
-    DatePickerDialog datepick;
+    DatePickerDialog.OnDateSetListener datepick;
     Calendar c;
-
+    String debutText;
+    String finText;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MainActivity.fab.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
         LinearLayout v = (LinearLayout) inflater.inflate(R.layout.fragment_addtask, container, false);
+
         btndeb = v.findViewById(R.id.btn_debut);
         btnfin = v.findViewById(R.id.btn_fin);
         textdeb = v.findViewById(R.id.text_debut);
@@ -51,19 +56,67 @@ public class AddTaskFragment extends Fragment {
         commentaire= v.findViewById(R.id.text_commentaire);
         comm=commentaire.getText().toString();
         nomtache=text_nom_tache.getText().toString();
+        debutText = textdeb.getText().toString();
+        finText = textfin.getText().toString();
 
+
+
+        btnfin.setOnClickListener(this);
+        btndeb.setOnClickListener(this);
+        btnvalider.setOnClickListener(this);
 
         return inflater.inflate(R.layout.fragment_addtask, container, false);
     }
 
-    public void ClickBtnvalider(){
-        btnvalider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(textdeb.getText().toString()=="Date Debut"){
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_debut:
+                c= Calendar.getInstance();
+                int day =c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year= c.get(Calendar.YEAR);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getActivity(),
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        datepick,
+                        year,month,day);
+
+
+                dialog.show();
+                datepick = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        textdeb.setText(dayOfMonth+"/"+month+"/"+year);
+                    }
+                };
+
+
+            case R.id.btn_fin:
+                c= Calendar.getInstance();
+                day =c.get(Calendar.DAY_OF_MONTH);
+                month = c.get(Calendar.MONTH);
+                year= c.get(Calendar.YEAR);
+                dialog = new DatePickerDialog(
+                        getActivity(),
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        datepick,
+                        year,month,day);
+
+
+                dialog.show();
+                datepick = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        textfin.setText(dayOfMonth+"/"+month+"/"+year);
+                    }
+                };
+
+            case R.id.btn_valider:
+                if(debutText=="Date Debut"){
                     Toast.makeText(getActivity(),"Vous n'avez pas entré de date de debut",Toast.LENGTH_LONG).show();
                 }
-                else if(textfin.getText().toString()=="Date FIN"){
+                else if(finText=="Date FIN"){
                     Toast.makeText(getActivity(),"Vous n'avez pas entré de date de fin",Toast.LENGTH_LONG).show();
 
                 }
@@ -76,47 +129,9 @@ public class AddTaskFragment extends Fragment {
 
                 }
                 else{
-                    //Entrez des Valeurs dans la base de donnés
+                    Toast.makeText(getActivity(),"Tout est bon",Toast.LENGTH_LONG).show();//Entrez des Valeurs dans la base de donnés
                 }
-            }
-        });
 
-    }
-
-    public void ClickBtnfin(){
-        btnfin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                c= Calendar.getInstance();
-                int day =c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year= c.get(Calendar.YEAR);
-                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                        textfin.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
-                    }
-                },day,month,year);
-                datepick.show();
-            }
-        });
-    }
-    public void ClickBtndeb(){
-        btndeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                c= Calendar.getInstance();
-                int day =c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year= c.get(Calendar.YEAR);
-                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                        textdeb.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
-                    }
-                },day,month,year);
-                datepick.show();
-            }
-        });
+        }
     }
 }
