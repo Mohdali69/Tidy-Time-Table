@@ -51,39 +51,13 @@ public class AddTaskFragment extends Fragment {
         commentaire= v.findViewById(R.id.text_commentaire);
         comm=commentaire.getText().toString();
         nomtache=text_nom_tache.getText().toString();
-        btndeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                c= Calendar.getInstance();
-                int day =c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year= c.get(Calendar.YEAR);
-                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                        textdeb.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
-                    }
-                },day,month,year);
-                datepick.show();
-            }
-        });
-        btnfin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                c= Calendar.getInstance();
-                int day =c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year= c.get(Calendar.YEAR);
-                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
-                        textfin.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
-                    }
-                },day,month,year);
-                datepick.show();
-            }
-        });
-        btndeb.setOnClickListener(new View.OnClickListener() {
+
+
+        return inflater.inflate(R.layout.fragment_addtask, container, false);
+    }
+
+    public void ClickBtnvalider(){
+        btnvalider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(textdeb.getText().toString()=="Date Debut"){
@@ -107,10 +81,42 @@ public class AddTaskFragment extends Fragment {
             }
         });
 
-        return inflater.inflate(R.layout.fragment_addtask, container, false);
     }
 
-
-
-
+    public void ClickBtnfin(){
+        btnfin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                c= Calendar.getInstance();
+                int day =c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year= c.get(Calendar.YEAR);
+                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        textfin.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
+                    }
+                },day,month,year);
+                datepick.show();
+            }
+        });
+    }
+    public void ClickBtndeb(){
+        btndeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                c= Calendar.getInstance();
+                int day =c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year= c.get(Calendar.YEAR);
+                datepick = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        textdeb.setText(mDay + "/" + (mMonth+1) + "/" + mYear);
+                    }
+                },day,month,year);
+                datepick.show();
+            }
+        });
+    }
 }

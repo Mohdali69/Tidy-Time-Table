@@ -30,6 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:onClick="Clicker"
         android:src="@drawable/ic_add_box_black_24dp"
         android:tint="@color/colorGray"
         app:backgroundTint="@color/primary_dark"
