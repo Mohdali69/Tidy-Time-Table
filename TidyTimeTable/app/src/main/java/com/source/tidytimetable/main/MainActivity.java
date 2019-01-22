@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             bitmap = BitmapFactory.decodeResource(null, R.drawable.profil);
         }
 
-        setBadgeCount();
+
 
         FirebaseMessaging.getInstance().subscribeToTopic("food");
     }
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 3000);
     }
 
-    private void setBadgeCount() {
+ /*   private void setBadgeCount() {
         String result = "";
         try {
             result = new BackgroundBadge().execute("count","count").get();
@@ -258,11 +258,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        nbBadgeCount = Integer.parseInt(result);
+
         if(!result.equals("0")) {
             badge = addBadgeAt(1,nbBadgeCount);
         }
     }
+    */
 
     private static Badge addBadgeAt(int position, int number) {
 

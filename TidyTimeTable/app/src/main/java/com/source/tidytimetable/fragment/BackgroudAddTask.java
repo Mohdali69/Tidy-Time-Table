@@ -1,5 +1,6 @@
 package com.source.tidytimetable.fragment;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -15,6 +16,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class BackgroudAddTask extends AsyncTask<String,Void,String> {
+    Context context;
+    public BackgroudAddTask(Context context) {
+        this.context = context;
+    }
     @Override
     protected String doInBackground(String... parms) {
         String type = parms[0];
@@ -23,7 +28,7 @@ public class BackgroudAddTask extends AsyncTask<String,Void,String> {
         String date_fin = parms[3];
         String commentaire = parms[4];
         String add_task_login = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/addtask.php";
-        if(type.equals("login")) {
+        if(type.equals("ajout_taches")) {
             try {
                 URL url = new URL(add_task_login);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();

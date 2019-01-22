@@ -13,28 +13,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint=""/>
-    <Button
-        android:id="@+id/btn_debut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date Debut"/>
+
     <TextView
         android:id="@+id/text_debut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date de Debut"
         android:textSize="25dp" />
-    <Button
-        android:id="@+id/btn_fin"
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:id="@+id/text_deb"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date FIN"/>
+        android:ems="10"
+        android:inputType="date" />
+
     <TextView
         android:id="@+id/text_fin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date de Fin "
         android:textSize="25dp" />
+
+    <EditText
+        android:id="@+id/text_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,9 +53,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint=""/>
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_valider"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Valider"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="#333333"
+        android:clickable="true"
+        android:padding="12dp"
+        android:text="Valider"
+        android:textColor="#999999" />
+
 </LinearLayout>
