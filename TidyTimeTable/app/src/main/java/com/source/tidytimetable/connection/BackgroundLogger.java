@@ -28,7 +28,7 @@ public class BackgroundLogger extends AsyncTask<String,Void,String> {
         String type = parms[0];
         String email = parms[1];
         String password = parms[2];
-        String login_url = "http://10.0.2.2:8888/login.php";
+        String login_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/login.php";
 
         if(type.equals("login")) {
             try {

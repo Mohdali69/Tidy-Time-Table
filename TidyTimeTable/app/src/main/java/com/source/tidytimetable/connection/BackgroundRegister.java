@@ -30,7 +30,7 @@ public class BackgroundRegister extends AsyncTask<String,Void,String> {
         String name = parms[2];
         String email = parms[3];
         String password = parms[4];
-        String signup_url = "http://10.0.2.2:8888/signup.php";
+        String signup_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/signup.php";
 
         if(type.equals("signup")) {
             try {

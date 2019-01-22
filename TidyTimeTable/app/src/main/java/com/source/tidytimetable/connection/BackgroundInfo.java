@@ -28,8 +28,8 @@ public class BackgroundInfo extends AsyncTask<String,Void,String> {
         String type = parms[0];
         String email = parms[1];
         String id = parms[2];
-        String info_url = "http://10.0.2.2:8888/info.php";
-        String exist_url = "http://10.0.2.2:8888/exist.php";
+        String info_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/info.php";
+        String exist_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/exist.php";
 
         if(type.equals("info")) {
             try {

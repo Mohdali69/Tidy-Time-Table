@@ -105,12 +105,13 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener {
 
 
                 dialog.show();
+                /*
                 datepick = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         textfin.setText(dayOfMonth+"/"+month+"/"+year);
                     }
-                };
+                };*/
 
             case R.id.btn_valider:
                 if(debutText=="Date Debut"){

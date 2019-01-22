@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(result.equals("1")) {
             new BackgroundPhoto()
-                    .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
+                    .execute("https://iutdoua-web.univ-lyon1.fr/~p1705290/www/images/" + LoginActivity.id + ".png");
         } else {
             bitmap = BitmapFactory.decodeResource(null, R.drawable.profil);
         }
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
                 Request request = new Request.Builder()
-                        .url("http://10.0.2.2:8888/statut.php")
+                        .url("https://iutdoua-web.univ-lyon1.fr/~p1705290/www/statut.php")
                         .post(request_body)
                         .build();
 
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
                             .build();
 
                     Request request = new Request.Builder()
-                            .url("http://10.0.2.2:8888/upload.php")
+                            .url("https://iutdoua-web.univ-lyon1.fr/~p1705290/www/upload.php")
                             .post(request_body)
                             .build();
 
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
                             throw new IOException("Error : "+response);
                         } else {
                             new BackgroundPhoto()
-                                    .execute("http://10.0.2.2:8888/images/" + LoginActivity.id + ".png");
+                                    .execute("https://iutdoua-web.univ-lyon1.fr/~p1705290/www/images/" + LoginActivity.id + ".png");
                             ProfilFragment.userChoosedPhoto = true;
                         }
                     } catch (IOException e) {

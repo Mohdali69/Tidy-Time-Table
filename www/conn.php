@@ -1,6 +1,6 @@
 <?php
 
-define('DB_HOST','localhost');
-define('DB_USERNAME','root');
-define('DB_PASSWORD','admin');
-define('DB_NAME','personal');
+define('DB_HOST','iutdoua-web.univ-lyon1.fr');
+define('DB_USERNAME','p1705290');
+define('DB_PASSWORD','297894');
+define('DB_NAME','p1705290');

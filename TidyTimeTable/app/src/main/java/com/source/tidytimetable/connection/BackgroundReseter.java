@@ -28,8 +28,8 @@ public class BackgroundReseter extends AsyncTask<String,Void,String> {
         String type = parms[0];
         String code = parms[1];
         String password = parms[2];
-        String reset_url = "http://10.0.2.2:8888/reset.php";
-        String off_url = "http://10.0.2.2:8888/off.php";
+        String reset_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/reset.php";
+        String off_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/off.php";
 
         if(type.equals("reset")) {
             try {

@@ -22,7 +22,7 @@ public class BackgroundLog extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... parms) {
         String type = parms[0];
-        String log_url = "http://10.0.2.2:8888/online.php";
+        String log_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/online.php";
 
         if (type.equals("online")) {
             try {

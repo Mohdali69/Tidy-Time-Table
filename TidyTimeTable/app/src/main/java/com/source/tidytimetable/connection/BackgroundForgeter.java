@@ -27,7 +27,7 @@ public class BackgroundForgeter extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... parms) {
         String type = parms[0];
         String email = parms[1];
-        String forgot_url = "http://10.0.2.2:8888/sendmail.php";
+        String forgot_url = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/sendmail.php";
 
         if(type.equals("sendmail")) {
             try {

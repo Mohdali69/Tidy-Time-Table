@@ -22,7 +22,7 @@ public class BackgroudAddTask extends AsyncTask<String,Void,String> {
         String date_debut = parms[2];
         String date_fin = parms[3];
         String commentaire = parms[4];
-        String add_task_login = "http://10.0.2.2:8888/addtask.php";
+        String add_task_login = "https://iutdoua-web.univ-lyon1.fr/~p1705290/www/addtask.php";
         if(type.equals("login")) {
             try {
                 URL url = new URL(add_task_login);
